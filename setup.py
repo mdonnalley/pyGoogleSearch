@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='pyGoogleSearch',
-    version='1.0',
+    version='1.0.1',
     packages=['pyGoogleSearch'],
     url='https://github.com/mdonnalley/pyGoogleSearch',
     license='',
