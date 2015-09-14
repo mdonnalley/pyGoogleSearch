@@ -4,7 +4,7 @@ setup(
     name='pyGoogleSearch',
     version='1.0',
     packages=['pyGoogleSearch'],
-    url='',
+    url='https://github.com/mdonnalley/pyGoogleSearch',
     license='',
     author='donnalley',
     author_email='michael.donnalley@gmail.com',
