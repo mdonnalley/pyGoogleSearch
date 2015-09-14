@@ -1,6 +1,8 @@
 # pyGoogleSearch
 Package for collecting and aggregating search results from various Google Sources. 
 
+Feedback is welcome at: michael.donnalley@gmail.com
+
 <b>Exmaple:</b>
 
 from pyGoogleSearch import *
