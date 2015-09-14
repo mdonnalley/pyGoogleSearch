@@ -1,5 +1,5 @@
 # pyGoogleSearch
-Package for collecting and aggregating search results from various Google Sources. 
+Package for collecting and aggregating search results from various Google sources (Google Search, Google News, Google Scholar). 
 
 Feedback is welcome at: michael.donnalley@gmail.com
 
