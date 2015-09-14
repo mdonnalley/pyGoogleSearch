@@ -16,7 +16,7 @@ class Google(object):
         self.recent = recent
         self.pages = pages
         self.headers = {'user-agent': 'Mozilla/5.0'}
-        self.big_soup = BeautifulSoup("<html><body></body></html>")
+        self.big_soup = BeautifulSoup("<html><body></body></html>", 'html.parser')
 
     def search(self):
         urls = []
@@ -27,7 +27,8 @@ class Google(object):
         for url in urls:
             if self.sleep:
                 wait(1)
-            soup = BeautifulSoup(requests.get(url, headers=self.headers).text)
+            html = requests.get(url, headers=self.headers).text
+            soup = BeautifulSoup(html, 'html.parser')
             self.big_soup.body.append(soup.body)
 
         results = self.scrape_search_result(self.big_soup)
@@ -100,7 +101,8 @@ class Google(object):
         for url in urls:
             if self.sleep:
                 wait(1)
-            soup = BeautifulSoup(requests.get(url, headers=self.headers).text)
+            html = requests.get(url, headers=self.headers).text
+            soup = BeautifulSoup(html, 'html.parser')
             self.big_soup.body.append(soup.body)
 
         results = self.scrape_news_result(self.big_soup)
@@ -175,7 +177,8 @@ class Google(object):
         for url in urls:
             if self.sleep:
                 wait(1)
-            soup = BeautifulSoup(requests.get(url, headers=self.headers).text)
+            html = requests.get(url, headers=self.headers).text
+            soup = BeautifulSoup(html, 'html.parser')
             self.big_soup.body.append(soup.body)
 
         results = self.scrape_scholar_result(self.big_soup)

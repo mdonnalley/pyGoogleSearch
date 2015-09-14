@@ -125,7 +125,8 @@ def collect_content(link):
         content = 'Error: PDF'
     else:
         try:
-            soup = BeautifulSoup(requests.get(link, headers={'user-agent': 'Mozilla/5.0'}).text)
+            html = requests.get(link, headers={'user-agent': 'Mozilla/5.0'}).text
+            soup = BeautifulSoup(html, 'html.parser')
             text = soup.find_all(text=True)
             content = filter(visible, text)
             content = ' '.join(content).encode('ascii', errors='ignore')
