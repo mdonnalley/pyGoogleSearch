@@ -1,6 +1,7 @@
 from time import sleep as wait
 from bs4 import BeautifulSoup
 import requests
+import urllib
 import collections
 import re
 
@@ -246,6 +247,7 @@ class Google(object):
 class UrlGenerator(Google):
     def __init__(self, query='hello world', num=10, start=0, recent=None):
         Google.__init__(self, query, num, start, recent)
+        self.query = urllib.quote(query, safe='+')
         self.num = str(self.num)
         self.start = str(self.start)
 
