@@ -4,12 +4,11 @@ Package for collecting and aggregating search results from various Google source
 Feedback is welcome at: michael.donnalley@gmail.com
 
 ##Exmaple:
-
+```
 from pyGoogleSearch import *
 
 topic = 'hello world'
 
-```
 raw_web_data = Google(topic, pages=5).search()
 output_web_data = DataHandler(raw_web_data).aggregate_data()
 write_to_csv(output_web_data, 'web_data.csv')
