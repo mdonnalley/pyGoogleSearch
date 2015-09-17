@@ -32,43 +32,44 @@ Formats data for outputting to CSV with the data points below
 
 ####Data points returned for a web search:
 
-URL
-Link Text
-Link Info
-Ranking 
-Content
+* URL
+* Link Text
+* Link Info
+* Ranking 
+* Content
 
 ####Data points returned for a news search:
 
-URL
-Link Text
-Link Info
-Source
-Time
-Ranking
-Content
+* URL
+* Link Text
+* Link Info
+* Source
+* Time
+* Ranking
+* Content
 
 ####Data points for scholar search:
 
-URL
-Title
-Excerpt
-Citations
-Year
-Ranking
-Content
+* URL
+* Title
+* Excerpt
+* Citations
+* Year
+* Ranking
+* Content
 
 
 ##The ImportExportFucntions module
 Contains the following functions for importing and exporting data
+```
 write_to_txt(data, output_file)
 write_to_csv(data, output_file)
 write_to_json(data, output_file)
 open_json(input_file)
+```
 
+####Additionally, there are some flaws to be aware of: 
 
-##Additionally, there are some flaws to be aware of: 
-
-The scholar function has a few flaws in how it collects data. Part of this is due to inconsistencies in how google renders their scholar results but regardless I need to revisit so that I can handle those inconsistencies better
-The function I’ve written to collect all the content from the search results cannot handle select websites and every so often returns nothing. Additionally, some websites will return a 404 error when you try to scrape it. The script does not break when this happens, it merely takes note and continues. It’s just important to know that because the function tries to grab all text from all the urls, it will inevitably miss on a few. Unfortunately, I believe that’s just the nature of the beast.
+* The scholar function has a few flaws in how it collects data. Part of this is due to inconsistencies in how google renders their scholar results but regardless I need to revisit so that I can handle those inconsistencies better
+* The function I’ve written to collect all the content from the search results cannot handle select websites and every so often returns nothing. Additionally, some websites will return a 404 error when you try to scrape it. The script does not break when this happens, it merely takes note and continues. It’s just important to know that because the function tries to grab all text from all the urls, it will inevitably miss on a few. Unfortunately, I believe that’s just the nature of the beast.
 
