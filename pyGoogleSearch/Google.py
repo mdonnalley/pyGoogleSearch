@@ -9,20 +9,21 @@ __author__ = 'donnalley'
 
 
 class Google(object):
-    def __init__(self, query='hello world', num=10, start=0, sleep=True, recent=None, pages=1):
+    def __init__(self, query='hello world', num=10, start=0, recent=None, site='', pages=1, sleep=True):
         self.query = '+'.join(query.split(' '))
         self.num = num
         self.start = start
-        self.sleep = sleep
         self.recent = recent
+        self.site = site
         self.pages = pages
+        self.sleep = sleep
         self.headers = {'user-agent': 'Mozilla/5.0'}
         self.big_soup = BeautifulSoup("<html><body></body></html>", 'html.parser')
 
     def search(self):
         urls = []
         for page in range(0, self.pages):
-            url = UrlGenerator(self.query, self.num, (self.start + (10*page)), self.recent).web_url
+            url = UrlGenerator(self.query, self.num, (self.start + (10*page)), self.recent, self.site).web_url
             urls.append(url)
 
         for url in urls:
@@ -245,8 +246,8 @@ class Google(object):
 
 
 class UrlGenerator(Google):
-    def __init__(self, query='hello world', num=10, start=0, recent=None):
-        Google.__init__(self, query, num, start, recent)
+    def __init__(self, query='hello world', num=10, start=0, recent=None, site=''):
+        Google.__init__(self, query, num, start, recent, site)
         self.query = urllib.quote(query, safe='+')
         self.num = str(self.num)
         self.start = str(self.start)
@@ -255,6 +256,8 @@ class UrlGenerator(Google):
     @property
     def web_url(self):
         url = 'https://www.google.com/search?q=' + self.query + '&num=' + self.num + '&start=' + self.start
+        if self.site != '':
+            url += '&as_sitesearch=' + self.site
         if self.recent in ['h', 'd', 'w', 'm', 'y']:
             url += '&tbs=qdr:' + self.recent
         return url
