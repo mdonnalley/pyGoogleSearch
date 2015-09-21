@@ -39,19 +39,6 @@ write_to_csv(output_scholar_data, 'scholar_data.csv')
 topic = 'social emotional learning AND \"healthy school culture\"'
 d = Google(topic, site='edutopia.org').search()
 print json.dumps(d, indent=2)
-=======
-raw_web_data = Google(topic, pages=5).search()
-output_web_data = DataHandler(raw_web_data).aggregate_data()
-write_to_csv(output_web_data, 'web_data.csv')
-
-raw_news_data = Google(topic, pages=5).search_news()
-output_news_data = DataHandler(raw_news_data).aggregate_data()
-write_to_csv(output_news_data, 'news_data.csv')
-
-raw_scholar_data = Google(topic, pages=5).search_scholar()
-output_scholar_data = DataHandler(raw_scholar_data).aggregate_data()
-write_to_csv(output_scholar_data, 'scholar_data.csv')
->>>>>>> origin/master
 ```
 
 ##The DataHandler module
