@@ -56,8 +56,6 @@ Formats data for outputting to CSV with the data points below
 * Link Text
 * Link Info
 * Ranking
-=======
-* Ranking 
 * Content
 
 ####Data points returned for a news search:
