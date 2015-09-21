@@ -9,6 +9,7 @@ from pyGoogleSearch import *
 
 topic = 'hello world'
 
+<<<<<<< HEAD
 # Collect data from google search
 
 # outputs in json format
@@ -38,6 +39,19 @@ write_to_csv(output_scholar_data, 'scholar_data.csv')
 topic = 'social emotional learning AND \"healthy school culture\"'
 d = Google(topic, site='edutopia.org').search()
 print json.dumps(d, indent=2)
+=======
+raw_web_data = Google(topic, pages=5).search()
+output_web_data = DataHandler(raw_web_data).aggregate_data()
+write_to_csv(output_web_data, 'web_data.csv')
+
+raw_news_data = Google(topic, pages=5).search_news()
+output_news_data = DataHandler(raw_news_data).aggregate_data()
+write_to_csv(output_news_data, 'news_data.csv')
+
+raw_scholar_data = Google(topic, pages=5).search_scholar()
+output_scholar_data = DataHandler(raw_scholar_data).aggregate_data()
+write_to_csv(output_scholar_data, 'scholar_data.csv')
+>>>>>>> origin/master
 ```
 
 ##The DataHandler module
@@ -52,7 +66,11 @@ Formats data for outputting to CSV with the data points below
 * URL
 * Link Text
 * Link Info
+<<<<<<< HEAD
 * Ranking
+=======
+* Ranking 
+>>>>>>> origin/master
 * Content
 
 ####Data points returned for a news search:
@@ -85,7 +103,11 @@ write_to_json(data, output_file)
 open_json(input_file)
 ```
 
+<<<<<<< HEAD
 ####Additionally, there are some flaws to be aware of:
+=======
+####Additionally, there are some flaws to be aware of: 
+>>>>>>> origin/master
 
 * The scholar function has a few flaws in how it collects data. Part of this is due to inconsistencies in how google renders their scholar results but regardless I need to revisit so that I can handle those inconsistencies better
 * The function I’ve written to collect all the content from the search results cannot handle select websites and every so often returns nothing. Additionally, some websites will return a 404 error when you try to scrape it. The script does not break when this happens, it merely takes note and continues. It’s just important to know that because the function tries to grab all text from all the urls, it will inevitably miss on a few. Unfortunately, I believe that’s just the nature of the beast.
