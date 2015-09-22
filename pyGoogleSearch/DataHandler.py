@@ -6,8 +6,9 @@ __author__ = 'donnalley'
 
 
 class DataHandler(object):
-    def __init__(self, dataframe):
+    def __init__(self, dataframe, get_content=True):
         self.dataframe = dataframe
+        self.get_content = get_content
         self.source = dataframe['source']
         if self.source == 'google':
             self.related_queries = self.dataframe['related_queries']
@@ -30,11 +31,11 @@ class DataHandler(object):
 
     def aggregate_data(self):
         if self.source == 'google':
-            output_dataframe = get_web_data(self.dataframe)
+            output_dataframe = get_web_data(self.dataframe, self.get_content)
         elif self.source == 'google news':
-            output_dataframe = get_news_data(self.dataframe)
+            output_dataframe = get_news_data(self.dataframe, self.get_content)
         elif self.source == 'google scholar':
-            output_dataframe = get_scholar_data(self.dataframe)
+            output_dataframe = get_scholar_data(self.dataframe, self.get_content)
         else:
             raise AttributeError("Invalid source")
 
@@ -42,9 +43,12 @@ class DataHandler(object):
 
 
 # HELPER FUNCTIONS ################################
-def get_web_data(datasource):
+def get_web_data(datasource, get_content):
     output_dataframe = []
-    headings = ['URL', 'Link Text', 'Link Info', 'Ranking', 'Content']
+    if get_content:
+        headings = ['URL', 'Link Text', 'Link Info', 'Ranking', 'Content']
+    else:
+        headings = ['URL', 'Link Text', 'Link Info', 'Ranking']
     output_dataframe.append(headings)
 
     additional_links = []
@@ -52,8 +56,11 @@ def get_web_data(datasource):
         link = item['link']
         link_text = item['link_text']
         link_info = item['link_info']
-        content = collect_content(link)
-        data = [link, link_text, link_info, rank, content]
+        if get_content:
+            content = collect_content(link)
+            data = [link, link_text, link_info, rank, content]
+        else:
+            data = [link, link_text, link_info, rank]
         output_dataframe.append(data)
 
         values = item['additional_links'].values()
@@ -71,9 +78,12 @@ def get_web_data(datasource):
     return output_dataframe
 
 
-def get_news_data(datasource):
+def get_news_data(datasource, get_content):
     output_dataframe = []
-    headings = ['URL', 'Link Text', 'Link Info', 'Source', 'Time', 'Ranking', 'Content']
+    if get_content:
+        headings = ['URL', 'Link Text', 'Link Info', 'Source', 'Time', 'Ranking', 'Content']
+    else:
+        headings = ['URL', 'Link Text', 'Link Info', 'Source', 'Time', 'Ranking']
     output_dataframe.append(headings)
 
     additional_links = []
@@ -83,8 +93,11 @@ def get_news_data(datasource):
         link_info = item['link_info']
         time = item['time']
         source = item['source']
-        content = collect_content(link)
-        data = [link, link_text, link_info, source, time, rank, content]
+        if get_content:
+            content = collect_content(link)
+            data = [link, link_text, link_info, source, time, rank, content]
+        else:
+            data = [link, link_text, link_info, source, time, rank]
         output_dataframe.append(data)
 
         values = item['additional_links'].values()
@@ -104,9 +117,12 @@ def get_news_data(datasource):
     return output_dataframe
 
 
-def get_scholar_data(datasource):
+def get_scholar_data(datasource, get_content):
     output_dataframe = []
-    headings = ['URL', 'Title', 'Excerpt', 'Citations', 'Year', 'Ranking', 'Content']
+    if get_content:
+        headings = ['URL', 'Title', 'Excerpt', 'Citations', 'Year', 'Rank', 'Content']
+    else:
+        headings = ['URL', 'Title', 'Excerpt', 'Citations', 'Year', 'Rank']
     output_dataframe.append(headings)
     for rank, item in enumerate(datasource['results'], 1):
         link = item['link']
@@ -114,8 +130,11 @@ def get_scholar_data(datasource):
         excerpt = item['excerpt']
         citations = item['citations']
         year = item['year']
-        content = collect_content(link)
-        data = [link, title, excerpt, citations, year,  rank, content]
+        if get_content:
+            content = collect_content(link)
+            data = [link, title, excerpt, citations, year,  rank, content]
+        else:
+            data = [link, title, excerpt, citations, year,  rank]
         output_dataframe.append(data)
     return output_dataframe
 

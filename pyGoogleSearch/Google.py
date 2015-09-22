@@ -237,7 +237,7 @@ class Google(object):
             links_data = {'link': link.encode('ascii', errors='ignore'),
                           'title': title.encode('ascii', errors='ignore'),
                           'excerpt': excerpt.encode('ascii', errors='ignore'),
-                          'year': int(year),
+                          'year': year,
                           'citations': int(citations)
                           }
 
