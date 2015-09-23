@@ -46,8 +46,8 @@ print json.dumps(d, indent=2)
 ##The DataHandler module
 The module takes the json that is returned from the Google().search() functions and does two things:
 
-Scrapes all visible text from URLs that are returned from the search
-Formats data for outputting to CSV with the data points below
+* Scrapes all visible text from URLs that are returned from the search
+* Formats data for outputting to CSV with the data points below
 
 
 ####Data points returned for a web search:
