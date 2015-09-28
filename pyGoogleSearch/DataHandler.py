@@ -151,7 +151,7 @@ def collect_content(link):
             content = ' '.join(content).encode('ascii', errors='ignore')
             content = content.replace('\n', ' ').replace('\t', ' ').replace('\r', ' ')
             content = clean_html(content)
-        except (requests.HTTPError, requests.exceptions.ConnectionError, ValueError):
+        except (requests.HTTPError, requests.ConnectionError, ValueError):
             content = 'Error: 404 not found'
     return content
 

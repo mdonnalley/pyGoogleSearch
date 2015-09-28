@@ -1,6 +1,8 @@
 # pyGoogleSearch
 Package for collecting and aggregating search results from various Google sources (Google Search, Google News, Google Scholar).
 
+Python 3.X is required to run this package
+
 Feedback is welcome at: mdgithub@gmail.com
 
 ##Exmaple:
