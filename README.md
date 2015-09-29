@@ -1,7 +1,7 @@
 # pyGoogleSearch
 Package for collecting and aggregating search results from various Google sources (Google Search, Google News, Google Scholar).
 
-Python 3.X is required to run this package
+Python 3.x is required to run this package
 
 Feedback is welcome at: mdgithub@gmail.com
 
@@ -18,7 +18,7 @@ raw_web_data = Google(topic, pages=5).search()
 
 # takes data from json, collects content from all urls and outputs to a list comprehension
 output_web_data = DataHandler(raw_web_data).aggregate_data()
-write_to_csv(output_web_data, 'web_data.csv')
+write_csv(output_web_data, 'web_data.csv')
 
 # COLLECT DATA FROM GOOGLE NEWS SEARCH
 
@@ -27,7 +27,7 @@ raw_news_data = Google(topic, pages=5).search_news()
 
 # takes data from json, collects content from all urls and outputs to a list comprehension
 output_news_data = DataHandler(raw_news_data).aggregate_data()
-write_to_csv(output_news_data, 'news_data.csv')
+write_csv(output_news_data, 'news_data.csv')
 
 # COLLECT DATA FROM GOOGLE SCHOLAR SEARCH
 
@@ -36,7 +36,7 @@ raw_scholar_data = Google(topic, pages=5).search_scholar()
 
 # takes data from json, collects content from all urls and outputs to a list comprehension
 output_scholar_data = DataHandler(raw_scholar_data).aggregate_data()
-write_to_csv(output_scholar_data, 'scholar_data.csv')
+write_csv(output_scholar_data, 'scholar_data.csv')
 
 # Site specfic search and special characters in search query
 
@@ -84,9 +84,8 @@ The module takes the json that is returned from the Google().search() functions 
 ##The ImportExportFucntions module
 Contains the following functions for importing and exporting data
 ```
-write_to_txt(data, output_file)
-write_to_csv(data, output_file)
-write_to_json(data, output_file)
+write_csv(data, output_file)
+write_json(data, output_file)
 open_json(input_file)
 ```
 
