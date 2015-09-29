@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from time import sleep as wait
 from bs4 import BeautifulSoup
 import requests
@@ -70,12 +72,11 @@ class Google(object):
                 for item in raw_additional_links.find_all('a'):
                     additional_link_text = item.get_text()
                     additional_link = item.get('href')[7:].split('&sa', 1)[0]
-                    additional_links[additional_link_text] = {'link': additional_link.encode('ascii', errors='ignore'),
-                                                              'link_text': link_text.encode('ascii', errors='ignore')}
+                    additional_links[additional_link_text] = {'link': additional_link, 'link_text': link_text}
 
-            links_data = {'link': link.encode('ascii', errors='ignore'),
-                          'link_text': link_text.encode('ascii', errors='ignore'),
-                          'link_info': link_info.encode('ascii', errors='ignore'),
+            links_data = {'link': link,
+                          'link_text': link_text,
+                          'link_info': link_info,
                           'additional_links': additional_links,
                           }
 
@@ -133,39 +134,39 @@ class Google(object):
             if link[:4] != 'http':
                 continue
 
-            link_text = result.find('a').get_text().encode('ascii', errors='ignore')
-            link_info = result.find('div', attrs={'class': 'st'}).get_text().encode('ascii', errors='ignore')
+            link_text = result.find('a').get_text()
+            link_info = result.find('div', attrs={'class': 'st'}).get_text()
             raw_source = result.find('span', attrs={'class': 'f'}).get_text().split(' - ')
-            source = raw_source[0].encode('ascii', errors='ignore')
-            time = raw_source[1].encode('ascii', errors='ignore')
+            source = raw_source[0]
+            time = raw_source[1]
 
             additional_links = dict()
             raw_additional_links = result.find_all('a')[1:]
             if raw_additional_links is not None:
                 for item in raw_additional_links:
-                    key = item.get_text().encode('ascii', errors='ignore')
+                    key = item.get_text()
                     if key == '':
                         continue
                     additional_link = item.get('href')[7:].split('&sa', 1)[0]
                     raw_source = item.find_next('span').get_text()
                     if ' - ' in raw_source:
-                        raw_source = raw_source.encode('ascii', errors='ignore').split(' - ')
+                        raw_source = raw_source.split(' - ')
                         source = raw_source[0]
                         time = raw_source[1]
                     else:
                         source = raw_source
                         time = 'NA'
-                    additional_links[key] = {'link': additional_link.encode('ascii', errors='ignore'),
-                                             'link_text': key.encode('ascii', errors='ignore'),
-                                             'source': source.encode('ascii', errors='ignore'),
-                                             'time': time.encode('ascii', errors='ignore')}
+                    additional_links[key] = {'link': additional_link,
+                                             'link_text': key,
+                                             'source': source,
+                                             'time': time}
 
-            links_data = {'link': link.encode('ascii', errors='ignore'),
-                          'link_text': link_text.encode('ascii', errors='ignore'),
-                          'link_info': link_info.encode('ascii', errors='ignore'),
+            links_data = {'link': link,
+                          'link_text': link_text,
+                          'link_info': link_info,
                           'additional_links': additional_links,
-                          'source': source.encode('ascii', errors='ignore'),
-                          'time': time.encode('ascii', errors='ignore'),
+                          'source': source,
+                          'time': time,
                           }
             results.append(links_data)
         return results
@@ -209,17 +210,17 @@ class Google(object):
                 continue
 
             try:
-                title = container.find('h3').a.text.encode('ascii', errors='ignore')
+                title = container.find('h3').a.text
             except AttributeError:
-                title = container.find('h3').text.encode('ascii', errors='ignore').replace('[CITATION][C] ', '')
+                title = container.find('h3').text.replace('[CITATION][C] ', '')
 
             try:
-                excerpt = container.find('div', class_='gs_rs').text.encode('ascii', errors='ignore')
+                excerpt = container.find('div', class_='gs_rs').text
             except AttributeError:
                 excerpt = ''
 
             try:
-                year = container.find('div', class_='gs_a').text.encode('ascii', errors='ignore')
+                year = container.find('div', class_='gs_a').text
                 year = re.sub(r'\D', '', year)
                 if len(year) != 4:
                     year = 'NA'
@@ -227,16 +228,15 @@ class Google(object):
                 year = 'NA'
 
             try:
-                citations = container.find('div', class_='gs_fl').a.text.encode('ascii', errors='ignore').replace(
-                    'Cited by ', '')
+                citations = container.find('div', class_='gs_fl').a.text.replace('Cited by ', '')
                 if citations.isdigit() is False:
                     citations = 0
             except AttributeError:
                 citations = 0
 
-            links_data = {'link': link.encode('ascii', errors='ignore'),
-                          'title': title.encode('ascii', errors='ignore'),
-                          'excerpt': excerpt.encode('ascii', errors='ignore'),
+            links_data = {'link': link,
+                          'title': title,
+                          'excerpt': excerpt,
                           'year': year,
                           'citations': int(citations)
                           }

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -38,11 +39,26 @@ class DataHandler(object):
             output_dataframe = get_scholar_data(self.dataframe, self.get_content)
         else:
             raise AttributeError("Invalid source")
-
         return output_dataframe
 
 
 # HELPER FUNCTIONS ################################
+def encode(list_object):
+    output = []
+    for item in list_object:
+        item = item.encode('utf-8')
+        output.append(item)
+    return output
+
+
+def decode(list_object):
+    output = []
+    for item in list_object:
+        item = item.decode()
+        output.append(item)
+    return output
+
+
 def get_web_data(datasource, get_content):
     output_dataframe = []
     if get_content:
@@ -71,8 +87,11 @@ def get_web_data(datasource, get_content):
     for additional_link in additional_links:
         link = additional_link['link']
         link_text = additional_link['link_text']
-        content = collect_content(link)
-        data = [link, link_text, 'Additional Link', 'NA', content]
+        if get_content:
+            content = collect_content(link)
+            data = [link, link_text, 'Additional Link', 'NA', content]
+        else:
+            data = [link, link_text, 'Additional Link', 'NA']
         output_dataframe.append(data)
 
     return output_dataframe
@@ -110,8 +129,11 @@ def get_news_data(datasource, get_content):
         link_text = additional_link['link_text']
         source = additional_link['source']
         time = additional_link['time']
-        content = collect_content(link)
-        data = [link, link_text, 'Additional Link', source, time, 'NA', content]
+        if get_content:
+            content = collect_content(link)
+            data = [link, link_text, 'Additional Link', source, time, 'NA', content]
+        else:
+            data = [link, link_text, 'Additional Link', source, time, 'NA']
         output_dataframe.append(data)
 
     return output_dataframe
@@ -148,7 +170,7 @@ def collect_content(link):
             soup = BeautifulSoup(html, 'html.parser')
             text = soup.find_all(text=True)
             content = filter(visible, text)
-            content = ' '.join(content).encode('ascii', errors='ignore')
+            content = ' '.join(content)
             content = content.replace('\n', ' ').replace('\t', ' ').replace('\r', ' ')
             content = clean_html(content)
         except (requests.HTTPError, requests.ConnectionError, ValueError):
@@ -173,9 +195,11 @@ def clean_html(html_text):
 def visible(element):
     if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
         return False
-    elif re.match('<!--.*-->', str(element.encode('ascii', errors='ignore'))):
+    # elif re.match('<!--.*-->', str(element.encode('ascii', errors='ignore'))):
+    elif re.match('<!--.*-->', element):
         return False
-    elif re.match('\n', str(element.encode('ascii', errors='ignore'))):
+    # elif re.match('\n', str(element.encode('ascii', errors='ignore'))):
+    elif re.match('\n', element):
         return False
     return True
 
