@@ -6,8 +6,8 @@ import re
 __author__ = 'donnalley'
 
 
-class DataHandler(object):
-    def __init__(self, dataframe, get_content=True):
+class DataHandler:
+    def __init__(self, dataframe, get_content=False):
         self.dataframe = dataframe
         self.get_content = get_content
         self.source = dataframe['source']

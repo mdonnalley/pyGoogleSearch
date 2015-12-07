@@ -10,7 +10,7 @@ import collections
 __author__ = 'donnalley'
 
 
-class Google(object):
+class Google:
     def __init__(self, query='hello world', num=10, start=0, recent=None, site='', pages=1, sleep=True):
         self.query = '+'.join(query.split(' '))
         self.num = num
@@ -57,30 +57,34 @@ class Google(object):
         results = []
         raw_results = soup.find_all('li', attrs={'class': 'g'})
         for result in raw_results:
-            link = result.find('a').get('href')[7:].split('&sa', 1)[0]
-            # skip if invalid link
-            if link[:4] != 'http':
-                continue
+            try:
+                link = result.find('a').get('href')[7:].split('&sa', 1)[0]
+                # skip if invalid link
+                if link[:4] != 'http':
+                    continue
 
-            link_text = result.find('a').get_text()
-            link_info = result.find('span', attrs={'class': 'st'}).get_text()
+                link_text = result.find('a').get_text()
+                link_info = result.find('span', attrs={'class': 'st'}).get_text()
 
-            additional_links = dict()
+                additional_links = dict()
 
-            raw_additional_links = result.find('div', attrs={'class': 'osl'})
-            if raw_additional_links is not None:
-                for item in raw_additional_links.find_all('a'):
-                    additional_link_text = item.get_text()
-                    additional_link = item.get('href')[7:].split('&sa', 1)[0]
-                    additional_links[additional_link_text] = {'link': additional_link, 'link_text': link_text}
+                raw_additional_links = result.find('div', attrs={'class': 'osl'})
+                if raw_additional_links is not None:
+                    for item in raw_additional_links.find_all('a'):
+                        additional_link_text = item.get_text()
+                        additional_link = item.get('href')[7:].split('&sa', 1)[0]
+                        additional_links[additional_link_text] = {'link': additional_link, 'link_text': link_text}
 
-            links_data = {'link': link,
-                          'link_text': link_text,
-                          'link_info': link_info,
-                          'additional_links': additional_links,
-                          }
+                links_data = {'link': link,
+                              'link_text': link_text,
+                              'link_info': link_info,
+                              'additional_links': additional_links,
+                              }
 
-            results.append(links_data)
+                results.append(links_data)
+
+            except AttributeError:
+                pass
         return results
 
     @staticmethod
