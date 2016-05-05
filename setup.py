@@ -2,9 +2,10 @@ from distutils.core import setup
 
 setup(
     name='pyGoogleSearch',
-    version='2.03',
+    version='2.04',
     packages=['pyGoogleSearch'],
     url='https://github.com/mdonnalley/pyGoogleSearch',
+    download_url='https://github.com/mdonnalley/pygooglesearch/tarball/0.1',
     license='',
     author='Mike Donnalley',
     author_email='michael.donnalley@gmail.com',
