@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 import requests
 import urllib.parse
 import re
-import collections
 
 __author__ = 'donnalley'
 
@@ -41,7 +40,7 @@ class Google:
         raw_total_results = self.big_soup.find('div', attrs={'class': 'sd'}).string
         total_results = int(raw_total_results.replace('About ', '').replace(' results', '').replace(',', ''))
 
-        data = collections.OrderedDict()
+        data = dict()
         data['source'] = 'google'
         data['expected_num'] = self.num * self.pages
         data['received_num'] = len(results)
@@ -55,7 +54,7 @@ class Google:
     @staticmethod
     def scrape_search_result(soup):
         results = []
-        raw_results = soup.find_all('li', attrs={'class': 'g'})
+        raw_results = soup.find_all('div', attrs={'class': 'g'})
         for result in raw_results:
             try:
                 link = result.find('a').get('href')[7:].split('&sa', 1)[0]
@@ -117,7 +116,7 @@ class Google:
         raw_total_results = self.big_soup.find('div', attrs={'class': 'sd'}).string
         total_results = int(raw_total_results.replace('About ', '').replace(' results', '').replace(',', ''))
 
-        data = collections.OrderedDict()
+        data = dict()
         data['source'] = 'google news'
         data['expected_num'] = self.num * self.pages
         data['received_num'] = len(results)
@@ -129,7 +128,7 @@ class Google:
 
     @staticmethod
     def scrape_news_result(soup):
-        raw_results = soup.find_all('li', attrs={'class': 'g'})
+        raw_results = soup.find_all('div', attrs={'class': 'g'})
         results = []
 
         for result in raw_results:
@@ -190,7 +189,7 @@ class Google:
 
         results = self.scrape_scholar_result(self.big_soup)
 
-        data = collections.OrderedDict()
+        data = dict()
         data['source'] = 'google scholar'
         data['expected_num'] = self.num * self.pages
         data['received_num'] = len(results)
