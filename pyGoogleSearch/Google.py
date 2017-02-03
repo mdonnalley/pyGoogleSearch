@@ -258,7 +258,7 @@ class UrlGenerator(Google):
     # https://www.google.com/search?q=hello+world&num=3&start=0
     @property
     def web_url(self):
-        url = 'https://www.google.com/search?q=' + self.query + '&num=' + self.num + '&start=' + self.start
+        url = 'https://www.google.com/search?q=' + self.query + '&num=' + self.num + '&start=' + self.start + '&hl=en-us'
         if self.site != '':
             url += '&as_sitesearch=' + self.site
         if self.recent in ['h', 'd', 'w', 'm', 'y']:
@@ -268,7 +268,7 @@ class UrlGenerator(Google):
     # https://www.google.co.in/search?q=hello+world&tbm=nws#q=hello+world&tbas=0&tbm=nws
     @property
     def news_url(self):
-        url = 'https://www.google.com/search?q=' + self.query + '&num=' + self.num + '&start=' + self.start
+        url = 'https://www.google.com/search?q=' + self.query + '&num=' + self.num + '&start=' + self.start + '&hl=en-us'
         url += '&tbm=nws#q=' + self.query + '&tbas=0&tbs=sbd:1&tbm=nws'
         if self.recent in ['h', 'd', 'w', 'm', 'y']:
             url += '&tbs=qdr:' + self.recent
@@ -277,5 +277,5 @@ class UrlGenerator(Google):
     # https://scholar.google.com/scholar?&q=hello+world&num=10&start=0
     @property
     def scholar_url(self):
-        url = 'https://scholar.google.com/scholar?&q=' + self.query + '&num=' + self.num + '&start=' + self.start
+        url = 'https://scholar.google.com/scholar?&q=' + self.query + '&num=' + self.num + '&start=' + self.start + '&hl=en-us'
         return url
