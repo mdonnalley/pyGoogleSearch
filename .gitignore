@@ -45,3 +45,4 @@ Temporary Items
 
 /dist
 __pycache__/
+.idea/
